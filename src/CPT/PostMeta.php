@@ -44,16 +44,18 @@ class PostMeta implements Registerable {
 			),
 			self::META_PREFIX . 'page_count'     => array(
 				...$default_args,
-				'type' => 'integer',
+				'type'              => 'integer',
+				'sanitize_callback' => 'absint',
 			),
 			self::META_PREFIX . 'price'          => array(
 				...$default_args,
-				'type' => 'integer',
+				'type'              => 'integer',
+				'sanitize_callback' => 'floatval',
 			),
 			self::META_PREFIX . 'gallery_images' => array(
 				...$default_args,
-				'type'          => 'array',
-				'show_in_rest'  => array(
+				'type'              => 'array',
+				'show_in_rest'      => array(
 					'schema' => array(
 						'type'  => 'array',
 						'items' => array(
@@ -61,6 +63,9 @@ class PostMeta implements Registerable {
 						),
 					),
 				),
+				'sanitize_callback' => static function ( $val ) {
+					return array_map( 'absint', (array) $val );
+				},
 			),
 		);
 
