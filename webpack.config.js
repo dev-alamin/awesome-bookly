@@ -17,9 +17,9 @@ module.exports = {
 			...( defaultConfig.resolve?.alias || {} ),
 			'@components': path.resolve(
 				__dirname,
-				'assets/js/src/components'
+				'blocks/js/src/components'
 			),
-			'@hooks': path.resolve( __dirname, 'assets/js/src/hooks' ),
+			'@hooks': path.resolve( __dirname, 'blocks/js/src/hooks' ),
 		},
 	},
 };

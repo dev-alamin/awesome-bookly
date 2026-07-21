@@ -2,6 +2,7 @@ import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { useEntityProp } from '@wordpress/core-data';
 import { TextControl } from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 
 const BooklyMetaPanel = () => {
 	const [ meta, setMeta ] = useEntityProp(
@@ -11,7 +12,7 @@ const BooklyMetaPanel = () => {
 	);
 
 	return (
-		<PluginDocumentSettingPanel title="Book Details" icon="book">
+		<PluginDocumentSettingPanel title={__( 'Book Details', 'awesome-bookly' )} icon="book">
 			<TextControl
 				label="ISBN"
 				value={ meta.awesome_bookly_isbn || '' }

@@ -2,7 +2,7 @@
 namespace Amin\AwesomeBookly;
 
 class Assets {
-	
+
 	public function __construct() {
 		add_action(
 			'enqueue_block_editor_assets',
