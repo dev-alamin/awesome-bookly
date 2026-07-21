@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Amin\AwesomeBookly\CPT\PostMeta;
 use Amin\AwesomeBookly\CPT\PostType;
+use Amin\AwesomeBookly\CPT\Taxonomy;
 
 final class Plugin {
 
@@ -44,7 +45,7 @@ final class Plugin {
 	public static function boot() {
 		new Assets();
 
-		$registrables = array( new PostType(), new PostMeta() );
+		$registrables = array( new PostType(), new PostMeta(), new Taxonomy() );
 
 		foreach ( $registrables as $registrable ) {
 			$registrable->register_hook();
