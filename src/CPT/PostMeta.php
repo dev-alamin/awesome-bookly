@@ -31,28 +31,28 @@ class PostMeta implements Registerable {
 		// Decalre all the meta keys we need.
 		$schema = array(
 			self::META_PREFIX . 'isbn'           => array(
-				'type' => 'string',
 				...$default_args,
+				'type' => 'string',
 			),
 			self::META_PREFIX . 'pub_date'       => array(
-				'type' => 'string',
 				...$default_args,
+				'type' => 'string',
 			),
 			self::META_PREFIX . 'lang'           => array(
-				'type' => 'string',
 				...$default_args,
+				'type' => 'string',
 			),
 			self::META_PREFIX . 'page_count'     => array(
-				'type' => 'integer',
 				...$default_args,
+				'type' => 'integer',
 			),
 			self::META_PREFIX . 'price'          => array(
-				'type' => 'integer',
 				...$default_args,
+				'type' => 'integer',
 			),
 			self::META_PREFIX . 'gallery_images' => array(
+				...$default_args,
 				'type'          => 'array',
-				'single'        => true,
 				'show_in_rest'  => array(
 					'schema' => array(
 						'type'  => 'array',
@@ -61,9 +61,6 @@ class PostMeta implements Registerable {
 						),
 					),
 				),
-				'auth_callback' => function () {
-					return current_user_can( 'edit_posts' );
-				},
 			),
 		);
 
