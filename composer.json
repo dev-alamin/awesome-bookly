@@ -15,5 +15,14 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require-dev": {
+        "squizlabs/php_codesniffer": "4.x-dev",
+        "wp-coding-standards/wpcs": "dev-phpcs-4",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
 }

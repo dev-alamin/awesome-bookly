@@ -6,9 +6,12 @@
  * Author: Al Amin
  * Author URI: https://github.com/dev-alamin
  * Plugin URI: https://github.com/dev-alamin/awesome-bookly
+ *
  * @package AsmBookly
  */
 
-if( ! defined( 'ABSPATH' ) ) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
+
+require_once __DIR__ . '/vendor/autoload.php';
