@@ -22,13 +22,13 @@ module.exports = window["wp"]["components"];
 
 /***/ },
 
-/***/ "@wordpress/core-data"
-/*!**********************************!*\
-  !*** external ["wp","coreData"] ***!
-  \**********************************/
+/***/ "@wordpress/data"
+/*!******************************!*\
+  !*** external ["wp","data"] ***!
+  \******************************/
 (module) {
 
-module.exports = window["wp"]["coreData"];
+module.exports = window["wp"]["data"];
 
 /***/ },
 
@@ -42,13 +42,13 @@ module.exports = window["wp"]["editor"];
 
 /***/ },
 
-/***/ "@wordpress/i18n"
-/*!******************************!*\
-  !*** external ["wp","i18n"] ***!
-  \******************************/
+/***/ "@wordpress/element"
+/*!*********************************!*\
+  !*** external ["wp","element"] ***!
+  \*********************************/
 (module) {
 
-module.exports = window["wp"]["i18n"];
+module.exports = window["wp"]["element"];
 
 /***/ },
 
@@ -162,12 +162,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_plugins__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/editor */ "@wordpress/editor");
 /* harmony import */ var _wordpress_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
 
@@ -176,23 +176,116 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const BooklyMetaPanel = () => {
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'asm_bookly_book', 'meta');
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__.PluginDocumentSettingPanel, {
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Book Details', 'awesome-bookly'),
-    icon: "book",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
-      label: "ISBN",
-      value: meta.awesome_bookly_isbn || '',
-      onChange: value => setMeta({
+const MetaPanel = () => {
+  const postType = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getCurrentPostType(), []);
+  if (postType != 'asm_bookly_book') {
+    return null;
+  }
+  const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
+  console.log(meta);
+  const {
+    editPost
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
+
+  // "awesome_bookly_pub_date": "",
+  // "awesome_bookly_lang": "",
+  // "awesome_bookly_page_count": 0,
+  // "awesome_bookly_price": 0,
+  // "awesome_bookly_gallery_images": []
+
+  const isbn = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_isbn ?? '', [meta]);
+  const date = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_pub_date ?? '', [meta]);
+  const lang = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_lang ?? '', [meta]);
+  const pgCount = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_page_count ?? '', [meta]);
+  const price = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_price ?? '', [meta]);
+  const images = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_gallery_images ?? '', [meta]);
+  const updateISBN = value => {
+    editPost({
+      meta: {
         ...meta,
         awesome_bookly_isbn: value
-      })
-    })
+      }
+    });
+  };
+  const updateDate = value => {
+    editPost({
+      meta: {
+        ...meta,
+        awesome_bookly_pub_date: value
+      }
+    });
+  };
+  const updateLang = value => {
+    editPost({
+      meta: {
+        ...meta,
+        awesome_bookly_lang: value
+      }
+    });
+  };
+  const updatePgCount = value => {
+    editPost({
+      meta: {
+        ...meta,
+        awesome_bookly_page_count: value
+      }
+    });
+  };
+  const updatePrice = value => {
+    editPost({
+      meta: {
+        ...meta,
+        awesome_bookly_price: value
+      }
+    });
+  };
+  const updateImages = value => {
+    editPost({
+      meta: {
+        ...meta,
+        awesome_bookly_gallery_images: value
+      }
+    });
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__.PluginDocumentSettingPanel, {
+    name: "awesome-bookly-book-details",
+    title: "Book Details",
+    initialOpen: true,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: "ISBN",
+      value: isbn,
+      onChange: updateISBN,
+      help: "Enter the ISBN number."
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: "Publication Date",
+      value: date,
+      onChange: updateDate,
+      help: "Enter the publication date."
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: "Language",
+      value: lang,
+      onChange: updateLang,
+      help: "Enter the language of the book."
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: "Page Count",
+      value: pgCount,
+      onChange: updatePgCount,
+      help: "Enter the number of pages."
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: "Price",
+      value: price,
+      onChange: updatePrice,
+      help: "Enter the price of the book."
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      label: "Gallery Images",
+      value: images,
+      onChange: updateImages,
+      help: "Enter the gallery image URLs, separated by commas."
+    })]
   });
 };
-(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__.registerPlugin)('bookly-meta-panel', {
-  render: BooklyMetaPanel
+(0,_wordpress_plugins__WEBPACK_IMPORTED_MODULE_0__.registerPlugin)('awesome-bookly-meta-panel', {
+  render: MetaPanel
 });
 })();
 

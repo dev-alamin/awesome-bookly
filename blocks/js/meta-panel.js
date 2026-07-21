@@ -1,44 +1,30 @@
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
+import { useEntityProp } from '@wordpress/core-data';
 import { TextControl } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
-import { useMemo } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-const MetaPanel = () => {
-	const meta = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
-		[]
+const BooklyMetaPanel = () => {
+	const [ meta, setMeta ] = useEntityProp(
+		'postType',
+		'asm_bookly_book',
+		'meta'
 	);
-
-	const { editPost } = useDispatch( 'core/editor' );
-
-	const isbn = useMemo( () => meta?.awesome_bookly_isbn ?? '', [ meta ] );
-
-	const updateISBN = ( value ) => {
-		editPost( {
-			meta: {
-				...meta,
-				awesome_bookly_isbn: value,
-			},
-		} );
-	};
 
 	return (
 		<PluginDocumentSettingPanel
-			name="awesome-bookly-book-details"
-			title="Book Details"
-			initialOpen={ true }
+			title={ __( 'Book Details', 'awesome-bookly' ) }
+			icon="book"
 		>
 			<TextControl
 				label="ISBN"
-				value={ isbn }
-				onChange={ updateISBN }
-				help="Enter the ISBN number."
+				value={ meta.awesome_bookly_isbn || '' }
+				onChange={ ( value ) =>
+					setMeta( { ...meta, awesome_bookly_isbn: value } )
+				}
 			/>
 		</PluginDocumentSettingPanel>
 	);
 };
 
-registerPlugin( 'awesome-bookly-meta-panel', {
-	render: MetaPanel,
-} );
+registerPlugin( 'bookly-meta-panel', { render: BooklyMetaPanel } );
