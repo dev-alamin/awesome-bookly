@@ -1,0 +1,19 @@
+{
+    "name": "amin/awesome-bookly",
+    "description": "A WP Plugin for book store, organizing books with gutenberg.",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "Amin\\AwesomeBookly\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Al Amin",
+            "email": "hmalaminmb4@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
