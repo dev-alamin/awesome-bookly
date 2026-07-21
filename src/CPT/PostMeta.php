@@ -8,7 +8,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Register Plugin's meta data.
+ *
+ * The Meta Data handler for the app.
+ * Very easy to add new meta key.
+ *
+ * @since 1.0.0
+ * @package AsmBookly
+ */
 class PostMeta implements Registerable {
+	/**
+	 * Post meta constant prefix.
+	 */
 	private const META_PREFIX = 'awesome_bookly_';
 
 	#[Override]
@@ -16,7 +28,12 @@ class PostMeta implements Registerable {
 		add_action( 'init', array( $this, 'register_post_meta' ) );
 	}
 
-	private function get_default_args() {
+	/**
+	 * Default args that we need to repeat.
+	 *
+	 * @return array
+	 */
+	private function get_default_args(): array {
 		return array(
 			'single'            => true,
 			'show_in_rest'      => true,
@@ -25,6 +42,11 @@ class PostMeta implements Registerable {
 		);
 	}
 
+	/**
+	 * Register and add new meta data.
+	 *
+	 * @return void
+	 */
 	public function register_post_meta() {
 		$default_args = $this->get_default_args();
 
