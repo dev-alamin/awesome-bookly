@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use Amin\AwesomeBookly\CPT\PostMeta;
 use Amin\AwesomeBookly\CPT\PostType;
 
 final class Plugin {
@@ -41,7 +42,11 @@ final class Plugin {
 	 * @return void
 	 */
 	public static function boot() {
-		( new PostType() )->register_hook();
+		$registrables = array( new PostType(), new PostMeta() );
+
+		foreach ( $registrables as $registrable ) {
+			$registrable->register_hook();
+		}
 
 		// If purely admin, then run this.
 		if ( is_admin() ) {
