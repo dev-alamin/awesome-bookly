@@ -42,6 +42,8 @@ final class Plugin {
 	 * @return void
 	 */
 	public static function boot() {
+		new Assets();
+
 		$registrables = array( new PostType(), new PostMeta() );
 
 		foreach ( $registrables as $registrable ) {

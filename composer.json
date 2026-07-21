@@ -1,28 +1,28 @@
 {
-    "name": "amin/awesome-bookly",
-    "description": "A WP Plugin for book store, organizing books with gutenberg.",
-    "type": "wordpress-plugin",
-    "license": "GPLv2",
-    "autoload": {
-        "psr-4": {
-            "Amin\\AwesomeBookly\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Al Amin",
-            "email": "hmalaminmb4@gmail.com"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require-dev": {
-        "squizlabs/php_codesniffer": "4.x-dev",
-        "wp-coding-standards/wpcs": "dev-phpcs-4",
-        "dealerdirect/phpcodesniffer-composer-installer": "^1.2"
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
-    }
+	"name": "amin/awesome-bookly",
+	"description": "A WP Plugin for book store, organizing books with gutenberg.",
+	"type": "wordpress-plugin",
+	"license": "GPLv2",
+	"autoload": {
+		"psr-4": {
+			"Amin\\AwesomeBookly\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Al Amin",
+			"email": "hmalaminmb4@gmail.com"
+		}
+	],
+	"minimum-stability": "dev",
+	"require-dev": {
+		"squizlabs/php_codesniffer": "4.x-dev",
+		"wp-coding-standards/wpcs": "dev-phpcs-4",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.2"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	}
 }
