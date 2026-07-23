@@ -1,7 +1,7 @@
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginDocumentSettingPanel } from '@wordpress/editor';
 import { TextControl } from '@wordpress/components';
-import { useSelect, useDispatch, select } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
 import { useMemo } from '@wordpress/element';
 
 const MetaPanel = () => {
@@ -14,30 +14,23 @@ const MetaPanel = () => {
 		return null;
 	}
 
-	const meta = useSelect(
-		( select ) => select( 'core/editor' ).getEditedPostAttribute( 'meta' ),
-		[]
-	);
-	console.log( meta );
+	const getMeta = ( bookData ) =>
+		bookData( 'core/editor' ).getEditedPostAttribute( 'meta' );
+
+	const meta = useSelect( getMeta, [] );
 
 	const { editPost } = useDispatch( 'core/editor' );
-
-	// "awesome_bookly_pub_date": "",
-	// "awesome_bookly_lang": "",
-	// "awesome_bookly_page_count": 0,
-	// "awesome_bookly_price": 0,
-	// "awesome_bookly_gallery_images": []
 
 	const isbn = useMemo( () => meta?.awesome_bookly_isbn ?? '', [ meta ] );
 	const date = useMemo( () => meta?.awesome_bookly_pub_date ?? '', [ meta ] );
 	const lang = useMemo( () => meta?.awesome_bookly_lang ?? '', [ meta ] );
 	const pgCount = useMemo(
-		() => meta?.awesome_bookly_page_count ?? '',
+		() => meta?.awesome_bookly_page_count ?? 0,
 		[ meta ]
 	);
 	const price = useMemo( () => meta?.awesome_bookly_price ?? '', [ meta ] );
 	const images = useMemo(
-		() => meta?.awesome_bookly_gallery_images ?? '',
+		() => meta?.awesome_bookly_gallery_images ?? [],
 		[ meta ]
 	);
 

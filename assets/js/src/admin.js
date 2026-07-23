@@ -181,24 +181,17 @@ const MetaPanel = () => {
   if (postType != 'asm_bookly_book') {
     return null;
   }
-  const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getEditedPostAttribute('meta'), []);
-  console.log(meta);
+  const getMeta = bookData => bookData('core/editor').getEditedPostAttribute('meta');
+  const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(getMeta, []);
   const {
     editPost
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useDispatch)('core/editor');
-
-  // "awesome_bookly_pub_date": "",
-  // "awesome_bookly_lang": "",
-  // "awesome_bookly_page_count": 0,
-  // "awesome_bookly_price": 0,
-  // "awesome_bookly_gallery_images": []
-
   const isbn = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_isbn ?? '', [meta]);
   const date = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_pub_date ?? '', [meta]);
   const lang = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_lang ?? '', [meta]);
-  const pgCount = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_page_count ?? '', [meta]);
+  const pgCount = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_page_count ?? 0, [meta]);
   const price = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_price ?? '', [meta]);
-  const images = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_gallery_images ?? '', [meta]);
+  const images = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => meta?.awesome_bookly_gallery_images ?? [], [meta]);
   const updateISBN = value => {
     editPost({
       meta: {

@@ -66,13 +66,10 @@ class PostMeta implements Registerable {
 			),
 			self::META_PREFIX . 'page_count'     => array(
 				...$default_args,
-				'type'              => 'integer',
 				'sanitize_callback' => 'absint',
 			),
 			self::META_PREFIX . 'price'          => array(
-				...$default_args,
-				'type'              => 'integer',
-				'sanitize_callback' => 'floatval',
+				...$default_args
 			),
 			self::META_PREFIX . 'gallery_images' => array(
 				...$default_args,
